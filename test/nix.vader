@@ -1,0 +1,28 @@
+Given nix (attribute):
+  attrs:
+  {
+    foo = pkgs.callPackage ./examples/foo {};
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  attrs:
+  {
+    foo = pkgs.callPackage ./examples/foo {};
+  }
+~~~~~~~
+
+
+Given nix (attribute syntax):
+  attrs:
+  {
+    foo = pkgs.callPackage ./examples/foo {};
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('attrs'), 'nixArgument'
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('./examples/foo'), 'nixPath'
