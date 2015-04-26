@@ -1,5 +1,4 @@
 Given nix (attribute):
-  attrs:
   {
     foo = pkgs.callPackage ./examples/foo {};
   }
@@ -9,20 +8,36 @@ Do (reindent):
 
 Expect (indentation):
 ~~~~~~~
-  attrs:
   {
     foo = pkgs.callPackage ./examples/foo {};
   }
 ~~~~~~~
 
+Given nix (list):
+  [
+    a
+    b
+  ]
 
-Given nix (attribute syntax):
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  [
+    a
+    b
+  ]
+~~~~~~~
+
+Given nix (function):
   attrs:
   {
-    foo = pkgs.callPackage ./examples/foo {};
+    foo = import ./examples/foo {};
   }
 
 Execute (syntax):
   AssertEqual SyntaxOf('attrs'), 'nixArgument'
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('import'), 'nixKeyword'
   AssertEqual SyntaxOf('./examples/foo'), 'nixPath'

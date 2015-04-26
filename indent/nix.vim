@@ -43,12 +43,6 @@ function! GetNixIndent()
 
     let ind += opened_symbol * &sw
 
-    if last_line =~ '^\s*' . s:block_close
-      if current_line !~ '^\s*' . s:block_close
-        let ind += &sw
-      endif
-    endif
-
     if current_line =~ '^\s*}'
       let bslnum = searchpair('{', '', '}', 'nbW', s:block_skip)
       let ind = indent(bslnum)
@@ -62,6 +56,10 @@ function! GetNixIndent()
     if current_line =~ '^\s*)'
       let bslnum = searchpair('(', '', ')', 'nbW', s:block_skip)
       let ind = indent(bslnum)
+    endif
+
+    if current_line =~ '^\s*' . s:block_close
+      let ind -= &sw
     endif
   endif
 
