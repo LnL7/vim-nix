@@ -13,31 +13,29 @@ Expect (indentation):
   }
 ~~~~~~~
 
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+
 Given nix (list):
-  [
-    a
-    b
-  ]
+  {
+    foo = [
+      a
+      b
+    ]
+  }
 
 Do (reindent):
   vip=
 
 Expect (indentation):
 ~~~~~~~
-  [
-    a
-    b
-  ]
+  {
+    foo = [
+      a
+      b
+    ]
+  }
 ~~~~~~~
 
-Given nix (function):
-  attrs:
-  {
-    foo = import ./examples/foo {};
-  }
-
 Execute (syntax):
-  AssertEqual SyntaxOf('attrs'), 'nixArgument'
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
-  AssertEqual SyntaxOf('import'), 'nixKeyword'
-  AssertEqual SyntaxOf('./examples/foo'), 'nixPath'

@@ -8,8 +8,6 @@ if exists("b:did_indent")
 endif
 let b:did_indent = 1
 
-setlocal nosmartindent
-
 setlocal indentexpr=GetNixIndent()
 
 if exists("*GetNixIndent")
@@ -20,8 +18,8 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 let s:skip_syntax  = '\%(Comment\|String\)$'
+let s:block_open   = '\%({\|[\)'
 let s:block_close  = '\%(}\|]\)'
-let s:block_skip   = "synIDattr(synID(line('.'),col('.'),1),'name') =~? '" . s:skip_syntax . "'"
 
 function! GetNixIndent()
   let lnum = prevnonblank(v:lnum - 1)
@@ -36,26 +34,8 @@ function! GetNixIndent()
     let current_line = getline(v:lnum)
     let last_line = getline(lnum)
 
-    let splited_line = split(last_line, '\zs')
-    let opened_symbol = 0
-    let opened_symbol += count(splited_line, '{') - count(splited_line, '}')
-    let opened_symbol += count(splited_line, '[') - count(splited_line, ']')
-
-    let ind += opened_symbol * &sw
-
-    if current_line =~ '^\s*}'
-      let bslnum = searchpair('{', '', '}', 'nbW', s:block_skip)
-      let ind = indent(bslnum)
-    endif
-
-    if current_line =~ '^\s*]'
-      let bslnum = searchpair('[', '', ']', 'nbW', s:block_skip)
-      let ind = indent(bslnum)
-    endif
-
-    if current_line =~ '^\s*)'
-      let bslnum = searchpair('(', '', ')', 'nbW', s:block_skip)
-      let ind = indent(bslnum)
+    if last_line =~ s:block_open . '\s*$'
+      let ind += &sw
     endif
 
     if current_line =~ '^\s*' . s:block_close
