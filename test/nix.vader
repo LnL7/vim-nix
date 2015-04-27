@@ -40,7 +40,7 @@ Expect (indentation):
 Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
 
-Given nix (comment):
+Given nix (let):
   let
     foo = true;
     bar = false;
@@ -49,7 +49,7 @@ Given nix (comment):
 Do (reindent):
   vip=
 
-Expect (let):
+Expect (indentation):
 ~~~~~~~
   let
     foo = true;
