@@ -52,6 +52,14 @@ Execute (syntax):
   AssertEqual SyntaxOf('repo'), 'nixInterpolationParam'
   AssertEqual SyntaxOf('rev'), 'nixInterpolation'
 
+Given nix (path):
+  https://github.com/LnL7/vim-nix
+
+Execute (syntax):
+  AssertEqual SyntaxOf('https'), 'nixPath'
+  AssertEqual SyntaxOf('github'), 'nixPath'
+  AssertEqual SyntaxOf('nix'), 'nixPath'
+
 Given nix (let):
   let
     foo = true;

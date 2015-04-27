@@ -38,7 +38,7 @@ syn region nixString matchgroup=nixStringDelimiter start=+''+  skip=+'''\|''${\|
 syn match  nixPath "\%(:\|\.\|\k\)\+\/\%(:\|\.\|\/\|\k\)\+"
 syn region nixPath matchgroup=nixPathDelimiter start="<" end=">" contains=nixPath
 
-syn match nixArgument  "\k\+\ze\s*:"
+syn match nixArgument  "\k\+\ze\s*:/\@!"
 syn match nixAttribute "\k\+\ze\s*==\@!"
 
 hi def link nixArgument               Identifier
