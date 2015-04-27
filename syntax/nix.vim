@@ -28,7 +28,8 @@ syn keyword nixTodo FIXME NOTE TODO OPTIMIZE XXX HACK contained
 syn match   nixComment '#.*' contains=nixTodo
 syn region  nixComment start=+/\*+ skip=+\\"+ end=+\*/+
 
-syn match  nixInterpolationParam '\w\+' contained
+syn match  nixInterpolationParam '\k\+' contained
+syn match  nixInterpolation '\$\k\+' contained
 syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="${" end="}" contained contains=nixInterpolationParam
 
 syn region nixString matchgroup=nixStringDelimiter start=+"+   skip=+\\"|\\\\+     end=+"+  contains=nixInterpolation
@@ -46,8 +47,9 @@ hi def link nixAttribute              Identifier
 hi def link nixBoolean                Boolean
 hi def link nixComment                Comment
 hi def link nixConditional            Conditional
+hi def link nixInterpolation          Macro
 hi def link nixInterpolationDelimiter Delimiter
-hi def link nixInterpolationParam     Comment
+hi def link nixInterpolationParam     Macro
 hi def link nixKeyword                Keyword
 hi def link nixOperator               Operator
 hi def link nixPath                   Include

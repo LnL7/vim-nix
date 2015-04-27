@@ -40,6 +40,18 @@ Expect (indentation):
 Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
 
+Given nix (string):
+  "https://github.com/${owner}/${repo}/archive/$rev.tar.gz"
+
+Execute (syntax):
+  AssertEqual SyntaxOf('"'), 'nixStringDelimiter'
+  AssertEqual SyntaxOf('https'), 'nixString'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('owner'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('repo'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('rev'), 'nixInterpolation'
+
 Given nix (let):
   let
     foo = true;
