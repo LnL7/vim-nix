@@ -39,3 +39,26 @@ Expect (indentation):
 
 Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
+
+Given nix (comment):
+  let
+    foo = true;
+    bar = false;
+  in foo
+
+Do (reindent):
+  vip=
+
+Expect (let):
+~~~~~~~
+  let
+    foo = true;
+    bar = false;
+  in foo
+~~~~~~~
+
+Execute (syntax):
+  AssertEqual SyntaxOf('let'), 'nixKeyword'
+  AssertEqual SyntaxOf('in'), 'nixKeyword'
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'

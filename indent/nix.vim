@@ -41,6 +41,18 @@ function! GetNixIndent()
     if current_line =~ '^\s*' . s:block_close
       let ind -= &sw
     endif
+
+    if last_line =~ '\<let\s*$'
+      let ind += &sw
+    endif
+
+    if lat_line =~ '^\<in\s*$'
+      let ind += &sw
+    endif
+
+    if current_line =~ '^\s*in\>'
+      let ind -= &sw
+    endif
   endif
 
   return ind
