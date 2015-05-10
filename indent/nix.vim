@@ -46,7 +46,7 @@ function! GetNixIndent()
       let ind += &sw
     endif
 
-    if lat_line =~ '^\<in\s*$'
+    if last_line =~ '^\<in\s*$'
       let ind += &sw
     endif
 
