@@ -39,11 +39,13 @@ syn match  nixPath "\%(:\|\.\|\k\)\+\/\%(:\|\.\|\/\|\k\)\+"
 syn region nixPath matchgroup=nixPathDelimiter start="<" end=">" contains=nixPath
 
 syn match nixArgument  "\k\+\ze\s*:/\@!"
-syn match nixAttribute "\k\+\ze\s*==\@!"
+syn match nixAttribute "\%(\k\|\.\)\+\ze\s*==\@!" contains=nixAttributeDot
+syn match nixAttributeDot "\." contained
 
 hi def link nixArgument               Identifier
 hi def link nixFunction               Function
 hi def link nixAttribute              Identifier
+hi def link nixAttributeDot           Normal
 hi def link nixBoolean                Boolean
 hi def link nixComment                Comment
 hi def link nixConditional            Conditional
