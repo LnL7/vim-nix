@@ -29,7 +29,6 @@ syn match   nixComment '#.*' contains=nixTodo
 syn region  nixComment start=+/\*+ skip=+\\"+ end=+\*/+
 
 syn match  nixInterpolationParam '\k\+' contained
-syn match  nixInterpolation '\$\k\+' contained
 syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="${" end="}" contained contains=nixInterpolationParam
 
 syn region nixString matchgroup=nixStringDelimiter start=+"+   skip=+\\"|\\\\+     end=+"+  contains=nixInterpolation

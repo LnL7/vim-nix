@@ -41,7 +41,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
 
 Given nix (string):
-  "https://github.com/${owner}/${repo}/archive/$rev.tar.gz"
+  "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz"
 
 Execute (syntax):
   AssertEqual SyntaxOf('"'), 'nixStringDelimiter'
@@ -50,7 +50,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
   AssertEqual SyntaxOf('owner'), 'nixInterpolationParam'
   AssertEqual SyntaxOf('repo'), 'nixInterpolationParam'
-  AssertEqual SyntaxOf('rev'), 'nixInterpolation'
+  AssertEqual SyntaxOf('rev'), 'nixInterpolationParam'
 
 Given nix (path):
   https://github.com/LnL7/vim-nix
