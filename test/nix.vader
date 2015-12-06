@@ -21,7 +21,7 @@ Given nix (list):
     foo = [
       a
       b
-    ]
+    ];
   }
 
 Do (reindent):
@@ -33,7 +33,7 @@ Expect (indentation):
     foo = [
       a
       b
-    ]
+    ];
   }
 ~~~~~~~
 
