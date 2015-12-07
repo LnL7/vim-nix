@@ -58,3 +58,5 @@ hi def link nixPathDelimiter          Delimiter
 hi def link nixString                 String
 hi def link nixStringDelimiter        Delimiter
 hi def link nixTodo                   Todo
+
+let b:current_syntax = "nix"
