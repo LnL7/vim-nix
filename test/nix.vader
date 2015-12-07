@@ -82,3 +82,15 @@ Execute (syntax):
   AssertEqual SyntaxOf('in'), 'nixKeyword'
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
   AssertEqual SyntaxOf('bar'), 'nixAttribute'
+
+Given nix (builtins):
+  hashString (builtins.fetchurl (toString "abort"))
+
+Execute (syntax):
+  AssertNotEqual SyntaxOf('hashString'), 'nixBuiltin'
+  AssertNotEqual SyntaxOf('hashString'), 'nixNamespacedBuiltin'
+  AssertEqual SyntaxOf('builtins'), 'nixBuiltin'
+  AssertEqual SyntaxOf('\.'), 'nixBuiltin'
+  AssertEqual SyntaxOf('fetchurl'), 'nixNamespacedBuiltin'
+  AssertEqual SyntaxOf('toString'), 'nixBuiltin'
+  AssertEqual SyntaxOf('abort'), 'nixString'

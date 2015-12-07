@@ -19,10 +19,6 @@ syn match   nixOperator '=='
 syn match   nixOperator '?'
 syn match   nixOperator '||'
 
-syn keyword nixFunction
-      \ currentSystem currentTime isFunction getEnv trace toPath pathExists
-      \ readFile toXML toFile filterSource attrNames getAttr hasAttr isAttrs
-      \ listToAttrs isList head tail add sub lessThan substring stringLength
 
 syn keyword nixTodo FIXME NOTE TODO OPTIMIZE XXX HACK contained
 syn match   nixComment '#.*' contains=nixTodo
@@ -41,9 +37,27 @@ syn match nixArgument  "\k\+\ze\s*:/\@!"
 syn match nixAttribute "\%(\k\|\.\)\+\ze\s*==\@!" contains=nixAttributeDot
 syn match nixAttributeDot "\." contained
 
+" Non-namespaced Nix builtins as of version 1.10:
+syn keyword nixBuiltin
+      \ abort baseNameOf derivation dirOf fetchTarball import map removeAttrs
+      \ throw toString
+
+" Namespaced Nix builtins as of version 1.10:
+syn keyword nixNamespacedBuiltin contained
+      \ add all any attrNames attrValues compareVersions concatLists
+      \ currentSystem deepSeq div elem elemAt fetchurl filter filterSource
+      \ foldl' fromJSON genList getAttr getEnv hasAttr hashString head
+      \ intersectAttrs isAttrs isBool isFunction isInt isList isString length
+      \ lessThan listToAttrs mul parseDrvName pathExists readDir readFile
+      \ replaceStrings seq sort stringLength sub substring tail toFile toJSON
+      \ toPath toXML trace typeOf
+
+syn match nixBuiltin "builtins\.[a-zA-Z']\+" contains=nixNamespacedBuiltin
+
 hi def link nixArgument               Identifier
-hi def link nixFunction               Function
 hi def link nixAttribute              Identifier
+hi def link nixBuiltin                Special
+hi def link nixNamespacedBuiltin      Special
 hi def link nixAttributeDot           Normal
 hi def link nixBoolean                Boolean
 hi def link nixComment                Comment
