@@ -114,15 +114,16 @@ syn keyword nixSimpleBuiltin
       \ abort baseNameOf derivation dirOf fetchTarball import map removeAttrs
       \ throw toString
 
-" Namespaced Nix builtins as of version 1.10:
+" Namespaced and non-namespaced Nix builtins as of version 1.10:
 syn keyword nixNamespacedBuiltin contained
-      \ add all any attrNames attrValues compareVersions concatLists
-      \ currentSystem deepSeq div elem elemAt fetchurl filter filterSource
-      \ foldl' fromJSON genList getAttr getEnv hasAttr hashString head
-      \ intersectAttrs isAttrs isBool isFunction isInt isList isString length
-      \ lessThan listToAttrs mul parseDrvName pathExists readDir readFile
-      \ replaceStrings seq sort stringLength sub substring tail toFile toJSON
-      \ toPath toXML trace typeOf
+      \ abort add all any attrNames attrValues baseNameOf compareVersions
+      \ concatLists currentSystem deepSeq derivation dirOf div elem elemAt
+      \ fetchTarball fetchurl filter filterSource foldl' fromJSON genList
+      \ getAttr getEnv hasAttr hashString head import intersectAttrs isAttrs
+      \ isBool isFunction isInt isList isString length lessThan listToAttrs map
+      \ mul parseDrvName pathExists readDir readFile removeAttrs replaceStrings
+      \ seq sort stringLength sub substring tail throw toFile toJSON toPath
+      \ toString toXML trace typeOf
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
