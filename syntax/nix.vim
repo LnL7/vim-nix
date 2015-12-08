@@ -56,13 +56,18 @@ syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" matc
 
 syn region nixAttributeSet start="{" end="}" contains=nixComment,nixAttributeDefinition
 
-syn region nixArgumentDefinitionWithDefault matchgroup=nixArgumentDefinition start="[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|\n\)*?\@=" matchgroup=NONE end="[,}]\@=" transparent contained contains=@nixExpr
-syn match nixArgumentDefinition "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|\n\)*[,}]\@=" contained
+"                                                                                                              vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+syn region nixArgumentDefinitionWithDefault matchgroup=nixArgumentDefinition start="[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*?\@=" matchgroup=NONE end="[,}]\@=" transparent contained contains=@nixExpr
+"                                                           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+syn match nixArgumentDefinition "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*[,}]\@=" contained
 syn match nixArgumentEllipsis "\.\.\." contained
 syn match nixArgumentSeparator "," contained
 
-syn match nixArgOperator '@\s*[a-zA-Z_][a-zA-Z0-9_'-]*\s*:'he=s+1 contained contains=nixAttribute
-syn match nixArgOperator '[a-zA-Z_][a-zA-Z0-9_'-]*\s*@'hs=e-1 contains=nixAttribute nextgroup=nixFunctionArgument
+"                          vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv                        vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+syn match nixArgOperator '@\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*[a-zA-Z_][a-zA-Z0-9_'-]*\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*:'he=s+1 contained contains=nixAttribute
+
+"                                                 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+syn match nixArgOperator '[a-zA-Z_][a-zA-Z0-9_'-]*\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*@'hs=e-1 contains=nixAttribute nextgroup=nixFunctionArgument
 
 " This is a bit more complicated, because function arguments can be passed in a
 " very similar form on how attribute sets are defined and two regions with the
@@ -74,6 +79,8 @@ syn match nixArgOperator '[a-zA-Z_][a-zA-Z0-9_'-]*\s*@'hs=e-1 contains=nixAttrib
 " and horizontal white space, which the following regex should hopefully do:
 "
 " "\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*"
+"
+" It is also used throught the whole file and is marked with 'v's as well.
 "
 " Fortunately the matching rules for function arguments are much simpler than
 " for real attribute sets, because we can stop when we hit the first ellipsis or
@@ -91,7 +98,8 @@ syn region nixFunctionArgument start="{\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)
 "                                         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv    vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv@vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv{----- identifier -----}  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 syn region nixFunctionArgument start="{\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*}\%(\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*@\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*[a-zA-Z_][a-zA-Z0-9_'-]*\)\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*:" end="}" contains=nixComment nextgroup=nixArgOperator
 
-syn match nixSimpleFunctionArgument "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|\n\)*:/\@!"
+"                                                               vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+syn match nixSimpleFunctionArgument "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*:/\@!"
 
 syn region nixList matchgroup=nixListBracket start="\[" end="\]" contains=@nixExpr
 

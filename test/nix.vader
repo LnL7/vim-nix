@@ -32,8 +32,8 @@ Given nix (attribute-path-lots-of-spacing):
     a
     .
     b
-    .
-    c
+    .#nastycomment
+    x
     =
     2
     ;
@@ -42,7 +42,9 @@ Given nix (attribute-path-lots-of-spacing):
 Execute (syntax):
   AssertEqual SyntaxOf('a'), 'nixAttribute'
   AssertEqual SyntaxOf('b'), 'nixAttribute'
-  AssertEqual SyntaxOf('c'), 'nixAttribute'
+  AssertEqual SyntaxAt(5, 3), 'nixAttributeDot'
+  AssertEqual SyntaxOf('nastycomment'), 'nixComment'
+  AssertEqual SyntaxOf('x'), 'nixAttribute'
   AssertEqual SyntaxOf('2'), 'nixInteger'
 
 Given nix (attribute-nested):
@@ -213,12 +215,15 @@ Execute (syntax):
 
 Given nix (lambda-attrs):
   { # very descriptive comment
-    foo ? # another comment
+    foo
+    /**/
+    ? # another comment
     /* yet another comment */
     # default value here:
     1
   , bar ? "xxx"
   , yyy
+  # last comment
   , ...
   }: {
     result = null;
@@ -228,6 +233,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('very descriptive comment'), 'nixComment'
   AssertEqual SyntaxOf('foo'), 'nixArgumentDefinition'
   AssertEqual SyntaxOf('?'), 'nixOperator'
+  AssertEqual SyntaxOf('/\*\*/'), 'nixComment'
   AssertEqual SyntaxOf('another comment'), 'nixComment'
   AssertEqual SyntaxOf('yet another comment'), 'nixComment'
   AssertEqual SyntaxOf('default value here:'), 'nixComment'
@@ -235,6 +241,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('bar'), 'nixArgumentDefinition'
   AssertEqual SyntaxOf('xxx'), 'nixSimpleString'
   AssertEqual SyntaxOf('yyy'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('last comment'), 'nixComment'
   AssertEqual SyntaxOf('\.\.\.'), 'nixArgumentEllipsis'
   AssertEqual SyntaxOf('result'), 'nixAttribute'
   AssertEqual SyntaxOf('null'), 'nixNull'
