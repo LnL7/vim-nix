@@ -110,7 +110,9 @@ syn region nixIfExpr matchgroup=nixIfExprKeyword start="\<if\>" end="\<else\>" c
 
 syn region nixWithExpr matchgroup=nixWithExprKeyword start="\<with\>" matchgroup=NONE end=";" contains=@nixExpr
 
-syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathDef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr
+syn region nixAssertExpr matchgroup=nixAssertKeyword start="\<assert\>" matchgroup=NONE end=";" contains=@nixExpr
+
+syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathDef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr
 
 " These definitions override @nixExpr and have to come afterwards:
 
@@ -137,6 +139,7 @@ syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamesp
 hi def link nixArgOperator            Operator
 hi def link nixArgumentDefinition     Identifier
 hi def link nixArgumentEllipsis       Operator
+hi def link nixAssertKeyword          Keyword
 hi def link nixAttribute              Identifier
 hi def link nixAttributeDot           Operator
 hi def link nixBoolean                Boolean
