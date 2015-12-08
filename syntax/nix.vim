@@ -54,7 +54,6 @@ syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained conta
 syn region nixInheritAttributeScope start="(" end=")" contained contains=nixComment,nixAttribute,nixAttributeDot
 syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" matchgroup=NONE end=";" contained contains=nixComment,nixInheritAttributeScope,nixAttribute
 
-"syn region nixAttributeSet start="{\ze\_.\{-\}}\ze\%(\s\|\n\)*:\@!" end="}" contains=nixComment,nixAttributeDefinition
 syn region nixAttributeSet start="{" end="}" contains=nixComment,nixAttributeDefinition
 
 syn region nixArgumentDefinitionWithDefault matchgroup=nixArgumentDefinition start="[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|\n\)*?\@=" matchgroup=NONE end="[,}]\@=" transparent contained contains=@nixExpr
