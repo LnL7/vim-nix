@@ -11,7 +11,7 @@ syn keyword nixBoolean     true false
 syn keyword nixNull        null
 syn keyword nixRecKeyword  rec
 
-syn keyword nixOperator and or not
+syn keyword nixOperator or
 syn match   nixOperator '!=\|!'
 syn match   nixOperator '&&'
 syn match   nixOperator '//\='
