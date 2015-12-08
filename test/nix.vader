@@ -165,10 +165,13 @@ Execute (syntax):
   AssertEqual SyntaxOf('&&'), 'nixOperator'
 
 Given nix (builtins):
-  builtins.doesntexist (hashString (builtins.fetchurl (toString "abort")))
+  builtins.doesntexist (builtins.map id [
+    hashString (builtins.fetchurl (toString "abort"))
+  ])
 
 Execute (syntax):
   AssertNotEqual SyntaxOf('doesntexist'), 'nixBuiltin'
+  AssertEqual SyntaxOf('map'), 'nixNamespacedBuiltin'
   AssertNotEqual SyntaxOf('hashString'), 'nixBuiltin'
   AssertNotEqual SyntaxOf('hashString'), 'nixNamespacedBuiltin'
   AssertEqual SyntaxOf('builtins'), 'nixBuiltin'
