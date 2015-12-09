@@ -137,6 +137,26 @@ Execute (syntax):
   AssertEqual SyntaxOf('github'), 'nixURI'
   AssertEqual SyntaxOf('nix'), 'nixURI'
 
+Given nix (nix-search-path):
+  assert <foo-bar/blah/xxx.nix>;
+
+Execute (syntax):
+  AssertEqual SyntaxOf('<'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('foo'), 'nixSearchPath'
+  AssertEqual SyntaxOf('-'), 'nixSearchPath'
+  AssertEqual SyntaxOf('bar'), 'nixSearchPath'
+  AssertEqual SyntaxOf('/'), 'nixSearchPath'
+  AssertEqual SyntaxOf('\.'), 'nixSearchPath'
+  AssertEqual SyntaxOf('>'), 'nixPathDelimiter'
+
+Given nix (nix-paths):
+  [ ~/homefile ./. /etc/passwd ]
+
+Execute (syntax):
+  AssertEqual SyntaxOf('\~/homefile'), 'nixHomePath'
+  AssertEqual SyntaxOf('\./\.'), 'nixPath'
+  AssertEqual SyntaxOf('/etc/passwd'), 'nixPath'
+
 Given nix (let):
   let
     foo = true;
