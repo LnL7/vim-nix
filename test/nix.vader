@@ -32,8 +32,8 @@ Given nix (attribute-path-lots-of-spacing):
     a
     .
     b
-    .
-    c
+    .#nastycomment
+    x
     =
     2
     ;
@@ -42,7 +42,9 @@ Given nix (attribute-path-lots-of-spacing):
 Execute (syntax):
   AssertEqual SyntaxOf('a'), 'nixAttribute'
   AssertEqual SyntaxOf('b'), 'nixAttribute'
-  AssertEqual SyntaxOf('c'), 'nixAttribute'
+  AssertEqual SyntaxAt(5, 3), 'nixAttributeDot'
+  AssertEqual SyntaxOf('nastycomment'), 'nixComment'
+  AssertEqual SyntaxOf('x'), 'nixAttribute'
   AssertEqual SyntaxOf('2'), 'nixInteger'
 
 Given nix (attribute-nested):
@@ -135,6 +137,26 @@ Execute (syntax):
   AssertEqual SyntaxOf('github'), 'nixURI'
   AssertEqual SyntaxOf('nix'), 'nixURI'
 
+Given nix (nix-search-path):
+  assert <foo-bar/blah/xxx.nix>;
+
+Execute (syntax):
+  AssertEqual SyntaxOf('<'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('foo'), 'nixSearchPath'
+  AssertEqual SyntaxOf('-'), 'nixSearchPath'
+  AssertEqual SyntaxOf('bar'), 'nixSearchPath'
+  AssertEqual SyntaxOf('/'), 'nixSearchPath'
+  AssertEqual SyntaxOf('\.'), 'nixSearchPath'
+  AssertEqual SyntaxOf('>'), 'nixPathDelimiter'
+
+Given nix (nix-paths):
+  [ ~/homefile ./. /etc/passwd ]
+
+Execute (syntax):
+  AssertEqual SyntaxOf('\~/homefile'), 'nixHomePath'
+  AssertEqual SyntaxOf('\./\.'), 'nixPath'
+  AssertEqual SyntaxOf('/etc/passwd'), 'nixPath'
+
 Given nix (let):
   let
     foo = true;
@@ -213,12 +235,15 @@ Execute (syntax):
 
 Given nix (lambda-attrs):
   { # very descriptive comment
-    foo ? # another comment
+    foo
+    /**/
+    ? # another comment
     /* yet another comment */
     # default value here:
     1
   , bar ? "xxx"
   , yyy
+  # last comment
   , ...
   }: {
     result = null;
@@ -228,6 +253,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('very descriptive comment'), 'nixComment'
   AssertEqual SyntaxOf('foo'), 'nixArgumentDefinition'
   AssertEqual SyntaxOf('?'), 'nixOperator'
+  AssertEqual SyntaxOf('/\*\*/'), 'nixComment'
   AssertEqual SyntaxOf('another comment'), 'nixComment'
   AssertEqual SyntaxOf('yet another comment'), 'nixComment'
   AssertEqual SyntaxOf('default value here:'), 'nixComment'
@@ -235,6 +261,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('bar'), 'nixArgumentDefinition'
   AssertEqual SyntaxOf('xxx'), 'nixSimpleString'
   AssertEqual SyntaxOf('yyy'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('last comment'), 'nixComment'
   AssertEqual SyntaxOf('\.\.\.'), 'nixArgumentEllipsis'
   AssertEqual SyntaxOf('result'), 'nixAttribute'
   AssertEqual SyntaxOf('null'), 'nixNull'
@@ -258,6 +285,16 @@ Execute (syntax):
   AssertEqual SyntaxOf('with'), 'nixWithExprKeyword'
   AssertEqual SyntaxOf('foo'), 'nixFunctionCall'
   AssertEqual SyntaxOf('withfoo'), 'nixFunctionCall'
+
+Given nix (assert-expr):
+  assert true -> false; null
+
+Execute (syntax):
+  AssertEqual SyntaxOf('assert'), 'nixAssertKeyword'
+  AssertEqual SyntaxOf('true'), 'nixBoolean'
+  AssertEqual SyntaxOf('->'), 'nixOperator'
+  AssertEqual SyntaxOf('false'), 'nixBoolean'
+  AssertEqual SyntaxOf('null'), 'nixNull'
 
 Given nix (funarg-let-attrset):
   { xxx ? null }@yyy:
