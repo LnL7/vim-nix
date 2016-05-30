@@ -13,6 +13,8 @@ syn keyword nixRecKeyword  rec
 
 syn keyword nixOperator or
 syn match   nixOperator '!=\|!'
+syn match   nixOperator '<=\?'
+syn match   nixOperator '>=\?'
 syn match   nixOperator '&&'
 syn match   nixOperator '//\='
 syn match   nixOperator '=='
@@ -43,7 +45,8 @@ syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 syn match nixPath "[a-zA-Z0-9._+-]*\%(/[a-zA-Z0-9._+-]\+\)\+"
 syn match nixHomePath "\~\%(/[a-zA-Z0-9._+-]\+\)\+"
 syn match nixSearchPath "[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*" contained
-syn region nixSearchPathRef matchgroup=nixPathDelimiter start="<" end=">" contains=nixSearchPath
+syn match nixPathDelimiter "[<>]" contained
+syn match nixSearchPathRef "<[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*>" contains=nixSearchPath,nixPathDelimiter
 syn match nixURI "[a-zA-Z][a-zA-Z0-9.+-]*:[a-zA-Z0-9%/?:@&=$,_.!~*'+-]\+"
 
 syn match nixAttributeDot "\." contained

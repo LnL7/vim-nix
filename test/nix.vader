@@ -315,3 +315,20 @@ Execute (syntax):
   AssertEqual SyntaxOf('ccc'), 'nixArgumentDefinition'
   AssertEqual SyntaxOf('let'), 'nixLetExprKeyword'
   AssertEqual SyntaxOf('bar'), 'nixAttribute'
+
+Given nix (searchpath-versus-lt):
+  {
+    alwaysTrue = 4 < 5;
+    alwaysFalse = 4 > 5;
+    somePath = <foo/bar>;
+    tailTrue = 4 <= 5;
+    tailFalse = 4 >= 5;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('alwaysTrue.*\zs<'), 'nixOperator'
+  AssertEqual SyntaxOf('alwaysFalse.*\zs>'), 'nixOperator'
+  AssertEqual SyntaxOf('somePath.*\zs<'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('somePath.*\zs>'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('tailTrue.*\zs<'), 'nixOperator'
+  AssertEqual SyntaxOf('tailFalse.*\zs>'), 'nixOperator'
