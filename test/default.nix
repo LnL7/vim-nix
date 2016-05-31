@@ -8,7 +8,7 @@ let
     sha256 = "0yvnah4lxk5w5qidc3y5nvl6lpi8rcv26907b3w7vjskqc935b8f";
   };
 
-  src = ./.;
+  src = ./..;
 
   rcFile = writeText "vimrc" ''
     filetype off
