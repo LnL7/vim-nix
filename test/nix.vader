@@ -16,35 +16,22 @@ Expect (indentation):
 Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
 
+Given nix (attribute-assignment):
+  {
+    foo = rec { };
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('rec'), 'nixRecKeyword'
+
 Given nix (attribute-path):
   {
     a.b.c = 2;
   }
 
 Execute (syntax):
-  AssertEqual SyntaxOf('a'), 'nixAttribute'
-  AssertEqual SyntaxOf('b'), 'nixAttribute'
   AssertEqual SyntaxOf('c'), 'nixAttribute'
-  AssertEqual SyntaxOf('2'), 'nixInteger'
-
-Given nix (attribute-path-lots-of-spacing):
-  {
-    a
-    .
-    b
-    .#nastycomment
-    x
-    =
-    2
-    ;
-  }
-
-Execute (syntax):
-  AssertEqual SyntaxOf('a'), 'nixAttribute'
-  AssertEqual SyntaxOf('b'), 'nixAttribute'
-  AssertEqual SyntaxAt(5, 3), 'nixAttributeDot'
-  AssertEqual SyntaxOf('nastycomment'), 'nixComment'
-  AssertEqual SyntaxOf('x'), 'nixAttribute'
   AssertEqual SyntaxOf('2'), 'nixInteger'
 
 Given nix (attribute-nested):
@@ -65,16 +52,16 @@ Execute (syntax):
 Given nix (attribute-inherit):
   {
     inherit (a.b.c) foo;
+    inherit bar baz;
   }
 
 Execute (syntax):
   AssertEqual SyntaxOf('inherit'), 'nixInherit'
   AssertEqual SyntaxOf('('), 'nixInheritAttributeScope'
   AssertEqual SyntaxOf(')'), 'nixInheritAttributeScope'
-  AssertEqual SyntaxOf('a'), 'nixAttribute'
-  AssertEqual SyntaxOf('b'), 'nixAttribute'
-  AssertEqual SyntaxOf('c'), 'nixAttribute'
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'
+  AssertEqual SyntaxOf('baz'), 'nixAttribute'
 
 Given nix (list):
   {
