@@ -22,15 +22,6 @@ let
 
   vim = "${pkgs.vim}/bin/vim";
 
-  # run = ''
-  #   ${pkgs.vim}/bin/vim -XNu '${rcFile}' -i NONE \
-  #     -c 'Vader! ${src}/test/*.vader' > /dev/null
-  # '';
-
-  # test = runCommand "vim-nix-test.log" {} ''
-  #   (${run}) 2>&1 | tee "$out" >&2
-  # '';
-
   env = stdenv.mkDerivation {
     name = "build-environment";
     shellHook = ''
