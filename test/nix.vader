@@ -31,6 +31,8 @@ Given nix (attribute-path):
   }
 
 Execute (syntax):
+  AssertNotEqual SyntaxOf('b'), 'nixAttribute'
+  AssertEqual SyntaxOf('\.'), 'nixAttributeDot'
   AssertEqual SyntaxOf('c'), 'nixAttribute'
   AssertEqual SyntaxOf('2'), 'nixInteger'
 
@@ -56,9 +58,11 @@ Given nix (attribute-inherit):
   }
 
 Execute (syntax):
+  AssertNotEqual SyntaxOf('c'), 'nixAttribute'
   AssertEqual SyntaxOf('inherit'), 'nixInherit'
   AssertEqual SyntaxOf('('), 'nixInheritAttributeScope'
   AssertEqual SyntaxOf(')'), 'nixInheritAttributeScope'
+  AssertEqual SyntaxOf('\.'), 'nixAttributeDot'
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
   AssertEqual SyntaxOf('bar'), 'nixAttribute'
   AssertEqual SyntaxOf('baz'), 'nixAttribute'
