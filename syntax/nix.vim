@@ -50,7 +50,7 @@ syn match nixSearchPathRef "<[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*>" contai
 syn match nixURI "[a-zA-Z][a-zA-Z0-9.+-]*:[a-zA-Z0-9%/?:@&=$,_.!~*'+-]\+"
 
 syn match nixAttributeDot "\." contained
-syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^.]\|$\)" contained
+syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^a-zA-Z0-9_'-.]\|$\)" contained
 syn region nixAttributeAssignment start="=" end="\ze;" contained contains=@nixExpr
 syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained contains=nixComment,nixAttribute,nixInterpolation,nixSimpleString,nixAttributeDot,nixAttributeAssignment
 

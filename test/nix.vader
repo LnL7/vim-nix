@@ -27,13 +27,14 @@ Execute (syntax):
 
 Given nix (attribute-path):
   {
-    a.b.c = 2;
+    foo.bar.baz = 2;
   }
 
 Execute (syntax):
-  AssertNotEqual SyntaxOf('b'), 'nixAttribute'
+  AssertNotEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertNotEqual SyntaxOf('bar'), 'nixAttribute'
   AssertEqual SyntaxOf('\.'), 'nixAttributeDot'
-  AssertEqual SyntaxOf('c'), 'nixAttribute'
+  AssertEqual SyntaxOf('baz'), 'nixAttribute'
   AssertEqual SyntaxOf('2'), 'nixInteger'
 
 Given nix (attribute-nested):
