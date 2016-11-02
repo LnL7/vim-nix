@@ -121,6 +121,27 @@ Execute (syntax):
   AssertEqual SyntaxOf('ref2'), 'nixInterpolationParam'
   AssertEqual SyntaxOf('ref3'), 'nixInterpolationParam'
 
+Given nix (multiline-string):
+  ''
+    foo
+        ''${bar}
+        '''
+  baz
+  ''
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  ''
+    foo
+        ''${bar}
+        '''
+    baz
+  ''
+~~~~~~~
+
 Given nix (url):
   https://github.com/LnL7/vim-nix
 
@@ -166,6 +187,35 @@ Expect (indentation):
     foo = true;
     bar = false;
   in {
+    result = foo && bar;
+  }
+~~~~~~~
+
+Given nix (let-in-whitespace):
+  let
+
+    foo = true;
+    bar = false;
+
+  in
+
+  {
+    result = foo && bar;
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  let
+
+    foo = true;
+    bar = false;
+
+  in
+
+  {
     result = foo && bar;
   }
 ~~~~~~~

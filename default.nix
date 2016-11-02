@@ -18,6 +18,12 @@ let
     set rtp+=${vim-nix}
     filetype plugin indent on
     syntax enable
+
+    function! Syntax()
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    endfunction
+
+    command! Syntax call Syntax()
   '';
 
   vim = "${pkgs.vim}/bin/vim";
