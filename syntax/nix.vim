@@ -55,7 +55,7 @@ syn region nixAttributeAssignment start="=" end="\ze;" contained contains=@nixEx
 syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained contains=nixComment,nixAttribute,nixInterpolation,nixSimpleString,nixAttributeDot,nixAttributeAssignment
 
 syn region nixInheritAttributeScope start="(" end=")" contained contains=nixComment,nixAttributeDot
-syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" matchgroup=NONE end=";" contained contains=nixComment,nixInheritAttributeScope,nixAttribute
+syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" end=";" contained contains=nixComment,nixInheritAttributeScope,nixAttribute
 
 syn region nixAttributeSet start="{" end="}" contains=nixComment,nixAttributeDefinition
 

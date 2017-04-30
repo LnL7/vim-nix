@@ -9,7 +9,7 @@ endif
 let b:did_indent = 1
 
 setlocal indentexpr=GetNixIndent()
-setlocal indentkeys+=0=then,0=else,0=in
+setlocal indentkeys+=0=then,0=else,0=inherit,*<Return>
 
 if exists("*GetNixIndent")
   finish
