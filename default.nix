@@ -36,9 +36,13 @@ let
   };
 
 in stdenv.mkDerivation {
-  name = "vim-nix-2016-08-07";
-
+  name = "vim-nix-2017-04-30";
   src = ./.;
+
+  passthru = { inherit env; };
+
+  dontBuild = true;
+  preferLoadBuild = true;
 
   installPhase = ''
     mkdir -p $out
@@ -50,4 +54,4 @@ in stdenv.mkDerivation {
   '';
 
   doCheck = true;
-} // { inherit env; }
+}
