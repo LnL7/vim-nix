@@ -228,6 +228,18 @@ Execute (syntax):
   AssertEqual SyntaxOf('result'), 'nixAttribute'
   AssertEqual SyntaxOf('&&'), 'nixOperator'
 
+Given nix (let-inherit-insert-indentation):
+Do (insert):
+  ilet\<Enter>inherit (attr) foo;\<Enter>in\<Enter>foo\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  let
+    inherit (attr) foo;
+  in
+    foo
+
+
 Given nix (builtins):
   builtins.doesntexist (builtins.map id [
     hashString (builtins.fetchurl (toString "abort"))
