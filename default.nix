@@ -42,7 +42,7 @@ in stdenv.mkDerivation {
   passthru = { inherit env; };
 
   dontBuild = true;
-  preferLoadBuild = true;
+  preferLocalBuild = true;
 
   installPhase = ''
     mkdir -p $out
