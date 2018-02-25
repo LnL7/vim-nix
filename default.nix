@@ -6,8 +6,8 @@ let
   vim-vader = fetchFromGitHub {
     owner = "junegunn";
     repo = "vader.vim";
-    rev = "ad2c752435baba9e7544d0046f0277c3573439bd";
-    sha256 = "0yvnah4lxk5w5qidc3y5nvl6lpi8rcv26907b3w7vjskqc935b8f";
+    rev = "ddb714246535e814ddd7c62b86ca07ffbec8a0af";
+    sha256 = "0jlxbp883y84nal5p55fxg7a3wqh3zny9dhsvfjajrzvazmiz44n";
   };
 
   vim-nix = ./.;
