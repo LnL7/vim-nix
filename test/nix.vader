@@ -332,6 +332,33 @@ Execute (syntax):
   AssertEqual SyntaxOf('a'), 'nixAttribute'
   AssertEqual SyntaxOf('222'), 'nixInteger'
 
+Given nix (multiline-ifexpr):
+  {
+    foo =
+      if true
+      then 111
+      else 222;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('if'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('then'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('else'), 'nixIfExprKeyword'
+
+Do (visualblock-coment):
+  02jw\<C-v>2jI# \<Esc>
+
+Expect (indentation):
+~~~~~~~
+  {
+    foo =
+      # if true
+      # then 111
+      # else 222;
+  }
+~~~~~~~
+
+
 Given nix (with-expr):
   with foo; withfoo
 
