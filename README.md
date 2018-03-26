@@ -21,7 +21,7 @@ The most common plugin managers include [vim-plug][vim-plug],
 With pathogen.vim, just clone this repository inside `~/.vim/bundle`:
 
 ```bash
-git clone https://github.com/LnL7/vim-nix.git ~/.vim/bundle
+git clone https://github.com/LnL7/vim-nix.git ~/.vim/bundle/vim-nix
 ```
 
 With the other plugin managers, just follow the instructions on the homepage of
