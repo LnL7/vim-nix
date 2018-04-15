@@ -121,21 +121,28 @@ syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,
 
 syn match nixInterpolationParam "[a-zA-Z_][a-zA-Z0-9_'-]*\%(\.[a-zA-Z_][a-zA-Z0-9_'-]*\)*" contained
 
-" Non-namespaced Nix builtins as of version 1.10:
+" Non-namespaced Nix builtins as of version 2.0:
 syn keyword nixSimpleBuiltin
-      \ abort baseNameOf derivation dirOf fetchTarball import map removeAttrs
-      \ throw toString
+      \ abort baseNameOf derivation derivationStrict dirOf fetchGit
+      \ fetchMercurial fetchTarball import isNull map placeholder removeAttrs
+      \ scopedImport throw toString
 
-" Namespaced and non-namespaced Nix builtins as of version 1.10:
+
+" Namespaced and non-namespaced Nix builtins as of version 2.0:
 syn keyword nixNamespacedBuiltin contained
-      \ abort add all any attrNames attrValues baseNameOf compareVersions
-      \ concatLists currentSystem deepSeq derivation dirOf div elem elemAt
-      \ fetchTarball fetchurl filter filterSource foldl' fromJSON genList
-      \ getAttr getEnv hasAttr hashString head import intersectAttrs isAttrs
-      \ isBool isFunction isInt isList isString length lessThan listToAttrs map
-      \ mul parseDrvName pathExists readDir readFile removeAttrs replaceStrings
-      \ seq sort stringLength sub substring tail throw toFile toJSON toPath
-      \ toString toXML trace typeOf
+      \ abort add addErrorContext all any attrNames attrValues baseNameOf
+      \ catAttrs compareVersions concatLists concatStringsSep currentSystem
+      \ currentTime deepSeq derivation derivationStrict dirOf div elem elemAt
+      \ fetchGit fetchMercurial fetchTarball fetchurl filter \ filterSource
+      \ findFile foldl' fromJSON functionArgs genList \ genericClosure getAttr
+      \ getEnv hasAttr hasContext hashString head import intersectAttrs isAttrs
+      \ isBool isFloat isFunction isInt isList isNull isString langVersion
+      \ length lessThan listToAttrs map match mul nixPath nixVersion
+      \ parseDrvName partition path pathExists placeholder readDir readFile
+      \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
+      \ storeDir storePath stringLength sub substring tail throw toFile toJSON
+      \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
+      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
