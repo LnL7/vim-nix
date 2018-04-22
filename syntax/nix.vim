@@ -115,7 +115,7 @@ syn region nixWithExpr matchgroup=nixWithExprKeyword start="\<with\>" matchgroup
 
 syn region nixAssertExpr matchgroup=nixAssertKeyword start="\<assert\>" matchgroup=NONE end=";" contains=@nixExpr
 
-syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr
+syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr,nixInterpolation
 
 " These definitions override @nixExpr and have to come afterwards:
 

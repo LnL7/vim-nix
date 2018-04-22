@@ -68,6 +68,25 @@ Execute (syntax):
   AssertEqual SyntaxOf('bar'), 'nixAttribute'
   AssertEqual SyntaxOf('baz'), 'nixAttribute'
 
+Given nix (attribute-lookup):
+  {
+    foo = attrs."foo.foo";
+    bar = attrs."${foo.bar}";
+    baz = attrs.${foo.baz};
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('foo.foo'), 'nixSimpleString'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('foo.bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixAttribute'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('foo.baz'), 'nixInterpolationParam'
+
 Given nix (list):
   {
     foo = [
