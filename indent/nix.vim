@@ -67,7 +67,7 @@ function! GetNixIndent()
 
     let ind = indent(v:lnum)
     let bslnum = searchpair('''''', '', '''''', 'bnW',
-          \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "InterpolationSpecial$"')
+          \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
 
     if ind <= indent(bslnum)
       let ind = indent(bslnum) + &sw

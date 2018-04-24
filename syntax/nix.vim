@@ -35,11 +35,11 @@ syn region  nixComment start=+/\*+ end=+\*/+ contains=nixTodo,@Spell
 syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="\${" end="}" contained contains=@nixExpr,nixInterpolationParam
 
 syn match nixSimpleStringSpecial /\\./ contained
-syn match nixInterpolationSpecial /''['$]/ contained
-syn match nixInterpolationSpecial /''\\./ contained
+syn match nixStringSpecial /''['$]/ contained
+syn match nixStringSpecial /''\\./ contained
 
 syn region nixSimpleString matchgroup=nixStringDelimiter start=+"+ skip=+\\"+ end=+"+ contains=nixInterpolation,nixSimpleStringSpecial
-syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixInterpolationSpecial
+syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixStringSpecial
 
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
@@ -164,7 +164,6 @@ hi def link nixInteger                Integer
 hi def link nixInterpolation          Macro
 hi def link nixInterpolationDelimiter Delimiter
 hi def link nixInterpolationParam     Macro
-hi def link nixInterpolationSpecial   Special
 hi def link nixLetExprKeyword         Keyword
 hi def link nixNamespacedBuiltin      Special
 hi def link nixNull                   Constant
@@ -179,6 +178,7 @@ hi def link nixSimpleString           String
 hi def link nixSimpleStringSpecial    SpecialChar
 hi def link nixString                 String
 hi def link nixStringDelimiter        Delimiter
+hi def link nixStringSpecial          Special
 hi def link nixTodo                   Todo
 hi def link nixURI                    Include
 hi def link nixWithExprKeyword        Keyword

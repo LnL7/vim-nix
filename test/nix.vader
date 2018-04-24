@@ -299,11 +299,11 @@ Given nix (multiline-string-escape):
 
 Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixString'
-  AssertEqual SyntaxOf("'''"), 'nixInterpolationSpecial'
+  AssertEqual SyntaxOf("'''"), 'nixStringSpecial'
   AssertEqual SyntaxOf('bar'), 'nixString'
-  AssertEqual SyntaxOf("''\\"), 'nixInterpolationSpecial'
+  AssertEqual SyntaxOf("''\\"), 'nixStringSpecial'
   AssertEqual SyntaxOf('end'), 'nixString'
-  AssertEqual SyntaxOf("''\\$"), 'nixInterpolationSpecial'
+  AssertEqual SyntaxOf("''\\$"), 'nixStringSpecial'
   AssertEqual SyntaxOf('{'), 'nixString'
   AssertEqual SyntaxOf('xxx'), 'nixString'
   AssertEqual SyntaxOf('}'), 'nixString'
