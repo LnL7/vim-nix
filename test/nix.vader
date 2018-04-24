@@ -293,7 +293,7 @@ Execute (syntax):
 
 Given nix (multiline-string-escape):
   ''
-    foo'''bar
+    foo'''bar''\nend
     ''${xxx}
   ''
 
@@ -301,6 +301,8 @@ Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixString'
   AssertEqual SyntaxOf("'''"), 'nixInterpolationSpecial'
   AssertEqual SyntaxOf('bar'), 'nixString'
+  AssertEqual SyntaxOf("''\\"), 'nixInterpolationSpecial'
+  AssertEqual SyntaxOf('end'), 'nixString'
   AssertEqual SyntaxOf("''\\$"), 'nixInterpolationSpecial'
   AssertEqual SyntaxOf('{'), 'nixString'
   AssertEqual SyntaxOf('xxx'), 'nixString'
