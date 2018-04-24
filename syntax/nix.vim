@@ -34,8 +34,9 @@ syn region  nixComment start=+/\*+ end=+\*/+ contains=nixTodo,@Spell
 
 syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="\${" end="}" contained contains=@nixExpr,nixInterpolationParam
 
-syn match nixSimpleStringSpecial /\\["nrt\\$]/ contained
-syn match nixInterpolationSpecial /''['$\\]/ contained
+syn match nixSimpleStringSpecial /\\./ contained
+syn match nixInterpolationSpecial /''['$]/ contained
+syn match nixInterpolationSpecial /''\\./ contained
 
 syn region nixSimpleString matchgroup=nixStringDelimiter start=+"+ skip=+\\"+ end=+"+ contains=nixInterpolation,nixSimpleStringSpecial
 syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixInterpolationSpecial
