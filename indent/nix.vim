@@ -19,6 +19,8 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 let s:skip_syntax = '\%(Comment\|String\)$'
+let s:binding_open = '\%(\<let\>\|{\)'
+let s:binding_close = '\%(\<in\>\|}\)'
 let s:block_open  = '\%({\|[\)'
 let s:block_close = '\%(}\|]\)'
 
@@ -40,6 +42,21 @@ function! GetNixIndent()
   if synIDattr(synID(v:lnum, 1, 1), "name") !~ s:skip_syntax
     let current_line = getline(v:lnum)
     let last_line = getline(lnum)
+
+    if current_line =~ '^\s*in\>'
+      let save_cursor = getcurpos()
+      normal ^
+      let bslnum = searchpair(s:binding_open, '', s:binding_close, 'bnW',
+            \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
+      call setpos('.', save_cursor)
+      return indent(bslnum)
+    endif
+
+    if last_line =~ ';$'
+      let bslnum = searchpair(s:binding_open, '', s:binding_close, 'bnW',
+            \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
+      let ind = indent(bslnum) + &sw
+    endif
 
     if last_line =~ s:block_open . '\s*$'
       let ind += &sw
