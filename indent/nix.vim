@@ -55,7 +55,9 @@ function! GetNixIndent()
     if last_line =~ ';$'
       let bslnum = searchpair(s:binding_open, '', s:binding_close, 'bnW',
             \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
-      let ind = indent(bslnum) + &sw
+      if bslnum != 0
+        let ind = indent(bslnum) + &sw
+      endif
     endif
 
     if last_line =~ s:block_open . '\s*$'
