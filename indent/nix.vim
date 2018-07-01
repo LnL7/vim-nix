@@ -66,6 +66,10 @@ function! GetNixIndent()
       let ind -= &sw
     endif
 
+    if last_line =~ '[(=]$'
+      let ind += &sw
+    endif
+
     if last_line =~ '\<let\s*$'
       let ind += &sw
     endif

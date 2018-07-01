@@ -247,6 +247,25 @@ Execute (syntax):
   AssertEqual SyntaxOf('result'), 'nixAttribute'
   AssertEqual SyntaxOf('&&'), 'nixOperator'
 
+Given nix (let-multiline-binding):
+  let
+    result =
+      foo && bar;
+  in
+    result
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  let
+    result =
+      foo && bar;
+  in
+    result
+~~~~~~~
+
 Given nix (let-inherit-insert-indentation):
 Do (insert):
   ilet\<Enter>inherit (attr) foo;\<Enter>in\<Enter>foo\<Esc>
