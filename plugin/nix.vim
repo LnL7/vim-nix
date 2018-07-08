@@ -17,6 +17,8 @@ function! nix#edit(attr)
     let position = split(split(output, '"')[0], ":")
     execute "edit " . position[0]
     execute position[1]
+    " Update default command to nix-build.
+    let b:dispatch = 'nix-build --no-out-link -A ' . a:attr
   endif
 endfunction
 
