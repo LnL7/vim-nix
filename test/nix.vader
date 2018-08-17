@@ -418,6 +418,19 @@ Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixFunctionCall'
   AssertEqual SyntaxOf('withfoo'), 'nixFunctionCall'
 
+Given nix (with-newline-let-staircase-bug):
+Do (with-newline-let-staircase-bug):
+  iwith foo;\<Return>\<Return>let\<Return>bar = 111;\<Return>in bar\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  with foo;
+
+  let
+    bar = 111;
+  in bar
+~~~~~~~
+
 Given nix (assert-expr):
   assert true -> false; null
 
