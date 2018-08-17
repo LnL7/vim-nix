@@ -76,7 +76,7 @@ function! GetNixIndent()
       let ind += &sw
     endif
 
-    if getline(v:lnum - 1) =~ '^\<in\s*$'
+    if last_line =~ '^\<in\s*$'
       let ind += &sw
     endif
 
