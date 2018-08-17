@@ -52,7 +52,7 @@ function! GetNixIndent()
       return indent(bslnum)
     endif
 
-    if last_line =~ ';$'
+    if last_line =~ ';\s*$'
       let bslnum = searchpair(s:binding_open, '', s:binding_close, 'bnW',
             \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
       if bslnum != 0
