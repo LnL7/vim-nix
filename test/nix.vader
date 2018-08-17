@@ -276,7 +276,18 @@ Expect (indentation):
     inherit (attr) foo;
   in
     foo
+~~~~~~~
 
+Given nix (let-in-indent-sameline):
+Do (let-in-indent-sameline):
+  ilet\<Enter>foo = 111;\<Enter>in foo\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  let
+    foo = 111;
+  in foo
+~~~~~~~
 
 Given nix (builtins):
   builtins.doesntexist (builtins.map id [
