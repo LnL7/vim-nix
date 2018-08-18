@@ -46,11 +46,38 @@ Given nix (attribute-nested):
     };
   }
 
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  {
+    a = {
+      b = {
+        c = "2}";
+      };
+    };
+  }
+
 Execute (syntax):
   AssertEqual SyntaxOf('a'), 'nixAttribute'
   AssertEqual SyntaxOf('b'), 'nixAttribute'
   AssertEqual SyntaxOf('c'), 'nixAttribute'
   AssertEqual SyntaxOf('2}'), 'nixSimpleString'
+
+Given nix (attribute-nested-insert-indentation):
+Do (insert):
+  i{\<Enter>a = {\<Enter>b = {\<Enter>c = "2}";\<Enter>};\<Enter>};\<Enter>}\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  {
+    a = {
+      b = {
+        c = "2}";
+      };
+    };
+  }
 
 Given nix (attribute-inherit):
   {
@@ -256,6 +283,19 @@ Given nix (let-multiline-binding):
 
 Do (reindent):
   vip=
+
+Expect (indentation):
+~~~~~~~
+  let
+    result =
+      foo && bar;
+  in
+    result
+~~~~~~~
+
+Given nix (let-multiline-binding-insert-indentation):
+Do (insert):
+  ilet\<Enter>result =\<Enter>foo && bar;\<Enter>in\<Enter>result\<Esc>
 
 Expect (indentation):
 ~~~~~~~
