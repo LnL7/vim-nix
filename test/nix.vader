@@ -276,7 +276,18 @@ Expect (indentation):
     inherit (attr) foo;
   in
     foo
+~~~~~~~
 
+Given nix (let-in-indent-sameline):
+Do (let-in-indent-sameline):
+  ilet\<Enter>foo = 111;\<Enter>in foo\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  let
+    foo = 111;
+  in foo
+~~~~~~~
 
 Given nix (builtins):
   builtins.doesntexist (builtins.map id [
@@ -431,6 +442,19 @@ Execute (syntax):
   AssertEqual SyntaxOf('with'), 'nixWithExprKeyword'
   AssertEqual SyntaxOf('foo'), 'nixFunctionCall'
   AssertEqual SyntaxOf('withfoo'), 'nixFunctionCall'
+
+Given nix (with-newline-let-staircase-bug):
+Do (with-newline-let-staircase-bug):
+  iwith foo;\<Return>\<Return>let\<Return>bar = 111;\<Return>in bar\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  with foo;
+
+  let
+    bar = 111;
+  in bar
+~~~~~~~
 
 Given nix (assert-expr):
   assert true -> false; null

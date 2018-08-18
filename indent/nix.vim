@@ -9,7 +9,7 @@ endif
 let b:did_indent = 1
 
 setlocal indentexpr=GetNixIndent()
-setlocal indentkeys+=0=then,0=else,0=inherit,*<Return>
+setlocal indentkeys+=0=then,0=else,0=inherit,0=in,*<Return>
 
 if exists("*GetNixIndent")
   finish
@@ -52,7 +52,7 @@ function! GetNixIndent()
       return indent(bslnum)
     endif
 
-    if last_line =~ ';$'
+    if last_line =~ ';\s*$' && current_line !~ s:binding_open
       let bslnum = searchpair(s:binding_open, '', s:binding_close, 'bnW',
             \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
       if bslnum != 0
@@ -76,7 +76,7 @@ function! GetNixIndent()
       let ind += &sw
     endif
 
-    if getline(v:lnum - 1) =~ '^\<in\s*$'
+    if last_line =~ '^\<in\s*$'
       let ind += &sw
     endif
 
