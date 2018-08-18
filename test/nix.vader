@@ -320,7 +320,7 @@ Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixString'
   AssertEqual SyntaxOf("'''"), 'nixStringSpecial'
   AssertEqual SyntaxOf('bar'), 'nixString'
-  AssertEqual SyntaxOf("''\\"), 'nixStringSpecial'
+  AssertEqual SyntaxOf("''\\\\"), 'nixStringSpecial'
   AssertEqual SyntaxOf('end'), 'nixString'
   AssertEqual SyntaxOf("''\\$"), 'nixStringSpecial'
   AssertEqual SyntaxOf('{'), 'nixString'
