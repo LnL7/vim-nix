@@ -327,6 +327,31 @@ Execute (syntax):
   AssertEqual SyntaxOf('xxx'), 'nixString'
   AssertEqual SyntaxOf('}'), 'nixString'
 
+Given nix (string-escape-errors):
+  ''
+    foo''\abar
+    foo''\nbar
+    ${"foo\xbar"}
+    ${"foo\tbar"}
+    ${"foo \
+       bar"}
+    ${"foo\\bar"}
+    ${"complex\\\\\f\\bar"}
+  ''
+
+Execute (syntax):
+  AssertEqual SyntaxOf("''\\\\a"), 'nixInvalidStringEscape'
+  AssertEqual SyntaxOf("''\\\\n"), 'nixStringSpecial'
+  AssertEqual SyntaxOf("\\\\x"), 'nixInvalidSimpleStringEscape'
+  AssertEqual SyntaxOf("\\\\t"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("\\\\$"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("foo\\\\\\zs\\\\"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex\\zs."), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex.\\zs."), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex..\\zs."), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex.*\\zs.\\zebar"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex....\\zs."), 'nixInvalidSimpleStringEscape'
+
 Given nix (lambda-attrs):
   { # very descriptive comment
     foo
