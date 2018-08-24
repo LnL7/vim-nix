@@ -9,6 +9,7 @@ Features included so far:
 * Syntax highlighting for Nix
 * Filetype detection for `.nix` files
 * Automatic indentation
+* [`NixEdit`](https://github.com/LnL7/vim-nix/commit/9b2e5c5d389e4a7f2b587ae1fdf7a46143993f21) command: navigate nixpkgs by attribute name
 
 
 ## Installation
