@@ -1,6 +1,6 @@
-language: vim
+language: nix
 
 before_script: |
   git clone https://github.com/junegunn/vader.vim.git
 script: |
-  ./test/run-tests.sh
+  nix-shell --command ./test/run-tests.sh
