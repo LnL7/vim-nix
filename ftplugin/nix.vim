@@ -23,7 +23,7 @@ endif
 " Borrowed from vim-markdown: https://github.com/plasticboy/vim-markdown/
 if exists('g:vim_nix_fenced_languages')
     let s:filetype_dict = {}
-    for s:filetype in g:vim_markdown_fenced_languages
+    for s:filetype in g:vim_nix_fenced_languages
         let key = matchstr(s:filetype, "[^=]*")
         let val = matchstr(s:filetype, "[^=]*$")
         let s:filetype_dict[key] = val
