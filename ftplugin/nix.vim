@@ -11,7 +11,6 @@ let b:did_ftplugin = 1
 setlocal
   \ comments=:#
   \ commentstring=#\ %s
-  \ iskeyword+=-
 
 if get(g:, 'nix_recommended_style', 1)
   setlocal
