@@ -3,3 +3,19 @@ set rtp+=../vader.vim
 set rtp+=../
 filetype plugin indent on
 syntax enable
+
+function! Nix_GetScriptID(fname) abort
+  let l:snlist = ''
+  redir => l:snlist
+  silent! scriptnames
+  redir END
+  let l:mx = '^\s*\(\d\+\):\s*\(.*\)$'
+  for l:line in split(l:snlist, "\n")
+    if stridx(substitute(l:line, '\\', '/', 'g'), a:fname) >= 0
+      return substitute(l:line, l:mx, '\1', '')
+    endif
+  endfor
+endfunction
+function! Nix_GetFunc(fname, funcname) abort
+  return function('<SNR>' . Nix_GetScriptID(a:fname) . '_' . a:funcname)
+endfunction
