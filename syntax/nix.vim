@@ -129,7 +129,7 @@ syn match nixInterpolationParam "[a-zA-Z_][a-zA-Z0-9_'-]*\%(\.[a-zA-Z_][a-zA-Z0-
 " Non-namespaced Nix builtins as of version 2.0:
 syn keyword nixSimpleBuiltin
       \ abort baseNameOf derivation derivationStrict dirOf fetchGit
-      \ fetchMercurial fetchTarball import isNull map placeholder removeAttrs
+      \ fetchMercurial fetchTarball import isNull map mapAttrs placeholder removeAttrs
       \ scopedImport throw toString
 
 
@@ -142,7 +142,7 @@ syn keyword nixNamespacedBuiltin contained
       \ findFile foldl' fromJSON functionArgs genList \ genericClosure getAttr
       \ getEnv hasAttr hasContext hashString head import intersectAttrs isAttrs
       \ isBool isFloat isFunction isInt isList isNull isString langVersion
-      \ length lessThan listToAttrs map match mul nixPath nixVersion
+      \ length lessThan listToAttrs map mapAttrs match mul nixPath nixVersion
       \ parseDrvName partition path pathExists placeholder readDir readFile
       \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
       \ storeDir storePath stringLength sub substring tail throw toFile toJSON
