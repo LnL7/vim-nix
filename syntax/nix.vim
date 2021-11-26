@@ -148,7 +148,7 @@ syn keyword nixNamespacedBuiltin contained
       \ storeDir storePath stringLength sub substring tail throw toFile toJSON
       \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
       \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML bitAnd
-      \ bitOr bitXor
+      \ bitOr bitXor floor ceil
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
