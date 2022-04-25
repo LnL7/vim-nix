@@ -61,7 +61,7 @@ syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^a-zA-Z0-9_'.-]\|$\)" con
 syn region nixAttributeAssignment start="=" end="\ze;" contained contains=@nixExpr
 syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained contains=nixComment,nixAttribute,nixInterpolation,nixSimpleString,nixAttributeDot,nixAttributeAssignment
 
-syn region nixInheritAttributeScope start="(" end=")" contained contains=nixComment,nixAttributeDot
+syn region nixInheritAttributeScope start="(" end="\ze)" contained contains=@nixExpr
 syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" end=";" contained contains=nixComment,nixInheritAttributeScope,nixAttribute
 
 syn region nixAttributeSet start="{" end="}" contains=nixComment,nixAttributeDefinition
