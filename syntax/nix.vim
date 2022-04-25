@@ -39,6 +39,8 @@ syn match nixStringSpecial /''['$]/ contained
 syn match nixStringSpecial /\$\$/ contained
 syn match nixStringSpecial /''\\[nrt]/ contained
 
+syn match nixSimpleStringSpecial /\$\$/ contained
+
 syn match nixInvalidSimpleStringEscape /\\[^nrt"\\$]/ contained
 syn match nixInvalidStringEscape /''\\[^nrt]/ contained
 
