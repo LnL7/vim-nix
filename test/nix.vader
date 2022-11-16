@@ -1,3 +1,7 @@
+Before:
+  unlet! b:nix_known_filetypes
+  unlet! b:nix_included_filetypes
+
 Given nix (attribute):
   {
     foo = pkgs.callPackage ./examples/foo {};
@@ -187,6 +191,73 @@ Expect (indentation):
     baz
   ''
 ~~~~~~~
+
+Given nix (fenced-multiline-string):
+  /* vim */ ''
+    line1 ${ref1}
+    ${ref2} line2
+    line3 ${ref3}
+  '';
+
+Execute (syntax):
+  AssertEqual SyntaxOf('vim'), 'nixCodeStart'
+  AssertEqual SyntaxOf('line1'), 'nixFencedString'
+  AssertEqual SyntaxOf('line2'), 'nixFencedString'
+  AssertEqual SyntaxOf('line3'), 'nixFencedString'
+  AssertEqual SyntaxOf('ref1'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('ref2'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('ref3'), 'nixInterpolationParam'
+
+Given nix (fenced-multiline-string):
+  {
+    c = /* c++ */ ''
+      #include <iostream>
+      code
+    '';
+
+    v = /* vim */ ''
+      set bg=dark
+    '';
+
+    s = /* sh */ ''
+      ${ref1}
+      ''${ref2}
+      echo ${ref3}
+      echo ''${ref4}
+    '';
+  }
+
+Execute (syntax):
+  let b:func = Nix_GetFunc('ftplugin/nix.vim', 'NixRefreshSyntax')
+  call b:func(0)
+  AssertEqual SyntaxOf('c++'), 'nixCodeStart'
+  AssertEqual SyntaxOf('include'), 'cInclude'
+  AssertEqual SyntaxOf('code'), 'nixSnippetCPP'
+  AssertEqual SyntaxOf('set'), 'vimCommand'
+  AssertEqual SyntaxOf('ref1'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('ref2'), 'shDerefVar'
+  AssertEqual SyntaxOf('ref3'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('ref4'), 'shDerefVar'
+
+Given nix (fenced-multiline-string-specials):
+  /* sh */ ''
+    '''
+    ''\n
+    ''\f
+    $$
+    ''$
+  '';
+
+Execute (syntax):
+  let b:func = Nix_GetFunc('ftplugin/nix.vim', 'NixRefreshSyntax')
+  call b:func(0)
+  AssertEqual SyntaxOf("'''"), 'nixStringSpecial'
+  AssertEqual SyntaxAt(2, 4), 'shQuote'
+  AssertEqual SyntaxAt(2, 5), 'shQuote'
+  AssertEqual SyntaxOf('\\n'), 'nixStringSpecial'
+  AssertEqual SyntaxOf('\\f'), 'nixInvalidStringEscape'
+  AssertEqual SyntaxOf('$$'), 'shDerefSimple'
+  AssertEqual SyntaxOf('\$', 3), 'nixSnippetSH'
 
 Given nix (url):
   https://github.com/LnL7/vim-nix
