@@ -33,6 +33,11 @@ function! GetNixIndent()
     return 0
   endif
 
+  let current = indent(v:lnum)
+  if current > ind
+    return current
+  endif
+
   " Skip indentation for single line comments explicitly, in case a
   " comment was just inserted (eg. visual block mode)
   if getline(v:lnum) =~ '^\s*#'
