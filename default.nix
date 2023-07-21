@@ -1,10 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 let
-  inherit (pkgs) stdenv fetchFromGitHub writeText runCommand vim;
-
-  # Fallback for nix 1.11
-  fetchGit = builtins.fetchGit or (x: x);
+  inherit (pkgs) stdenv fetchFromGitHub writeText vim;
 
   vader = fetchFromGitHub {
     owner = "junegunn";
@@ -18,7 +15,7 @@ stdenv.mkDerivation rec {
   name = "vim-nix-${version}${versionSuffix}";
   version = "0.1.0";
   versionSuffix = "pre${toString src.revCount or 0}.${src.shortRev or "0000000"}";
-  src = fetchGit ./.;
+  src = ./.;
 
   dontBuild = true;
   preferLocalBuild = true;
