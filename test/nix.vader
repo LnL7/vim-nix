@@ -79,6 +79,7 @@ Expect (indentation):
     };
   }
 
+
 Given nix (attribute-inherit):
   {
     inherit (a.b.c) foo;
@@ -94,6 +95,23 @@ Execute (syntax):
   AssertEqual SyntaxOf('foo'), 'nixAttribute'
   AssertEqual SyntaxOf('bar'), 'nixAttribute'
   AssertEqual SyntaxOf('baz'), 'nixAttribute'
+
+Given nix (attribute-inherit-complex):
+  {
+    inherit (import <nixpkgs> { }) hello;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('inherit'), 'nixInherit'
+  AssertEqual SyntaxOf('('), 'nixInheritAttributeScope'
+  AssertEqual SyntaxOf(')'), 'nixInheritAttributeScope'
+  AssertEqual SyntaxOf(';'), 'nixInherit'
+  AssertEqual SyntaxOf('import'), 'nixSimpleBuiltin'
+  AssertEqual SyntaxOf('<'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('>'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('nixpkgs'), 'nixSearchPath'
+  AssertEqual SyntaxOf('{ }'), 'nixAttributeSet'
+  AssertEqual SyntaxOf('hello'), 'nixAttribute'
 
 Given nix (attribute-lookup):
   {
