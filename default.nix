@@ -29,8 +29,8 @@ stdenv.mkDerivation rec {
 
   vimrc = writeText "vimrc" ''
     filetype off
-    set rtp+=${vader}
-    set rtp+=${src}
+    set rtp^=${vader}
+    set rtp^=${src}
     filetype plugin indent on
     syntax enable
 
