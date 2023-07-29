@@ -234,6 +234,167 @@ Execute (syntax):
   AssertEqual SyntaxOf('\./\.'), 'nixPath'
   AssertEqual SyntaxOf('/etc/passwd'), 'nixPath'
 
+Given nix (path-with-interpolation-simple):
+  ./snens/${bar}/baz
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('/baz'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 8), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 15), 'nixInterpolatedPath'
+
+Given nix (path-with-interpolation-in-path-part):
+  ./snens/${bar}kek/end
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('/end'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 8), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 14), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 15), 'nixInterpolatedPath'
+
+Given nix (path-with-interpolation-and-prefix):
+  ./snens/pre${bar}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 8), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 12), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 17), 'nixInterpolationDelimiter'
+
+Given nix (path-with-interpolation-suffix):
+  ./snens/pre${bar}suff
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 8), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 12), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 17), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('suff'), 'nixInterpolatedPath'
+
+Given nix (path-with-interpolation-in-mid-part):
+  ./snens/pre${bar}/kek
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('/kek'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+
+Given nix (path-with-multiple-interpolations):
+  ./snens/${bar}${baz}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 20), 'nixInterpolationDelimiter'
+
+Given nix (path-with-multiple-interpolations-and-infix):
+  ./snens/${bar}in${baz}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('in'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 17), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 22), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 14), 'nixInterpolationDelimiter'
+
+Given nix (path-with-multiple-interpolations-and-suffix):
+  ./snens/${bar}in${baz}suff
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('in'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 17), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 22), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 14), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('suff'), 'nixInterpolatedPath'
+
+Execute (syntax):
+
+Given nix (path-with-multiple-interpolations-and-prefix):
+  ./snens/pre${bar}in${baz}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 12), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('in'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 20), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 25), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 17), 'nixInterpolationDelimiter'
+
+Given nix (path-with-multiple-interpolations-and-dir-suffix):
+  ./snens/${bar}in${baz}/suff
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('in'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 17), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 22), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 14), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 23), 'nixInterpolatedPath'
+
+Given nix (path-with-multiple-interpolations-in-separate-dirs):
+  ./snens/${bar}/${baz}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 16), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 21), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 14), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 15), 'nixInterpolatedPath'
+
+Given nix (homepath-with-interpolation):
+  ~/${snens}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('\~/'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('snens'), 'nixInterpolationParam'
+
+Given nix (path-with-invalid-infix):
+  ./snens/${bar}in!${baz}
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 8), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('in'), 'nixInterpolatedPath'
+# invalid syntax. Just make sure this isn't misinterpreted as a path.
+  AssertEqual SyntaxOf('!'), 'nixOperator'
+  AssertEqual SyntaxAt(1, 18), ''
+  AssertEqual SyntaxOf('baz'), 'nixArgumentDefinition'
+
+Given nix (path-with-recursive-interpolation):
+  ./snens/${bar.${baz}}/suff
+
+Execute (syntax):
+  AssertEqual SyntaxOf('./snens'), 'nixInterpolatedPath'
+  AssertEqual SyntaxAt(1, 9), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 15), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 21), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxAt(1, 11), 'nixInterpolationParam'
+  AssertEqual SyntaxAt(1, 22), 'nixInterpolatedPath'
+
 Given nix (let):
   let
     foo = true;

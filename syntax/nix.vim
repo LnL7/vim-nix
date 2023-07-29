@@ -50,6 +50,7 @@ syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ en
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
 syn match nixPath "[a-zA-Z0-9._+-]*\%(/[a-zA-Z0-9._+-]\+\)\+"
+syn region nixInterpolatedPath start="\%(\~\|[a-zA-Z0-9._+-]*\)\%(\/[a-zA-Z0-9._+/-]\+\|\/\)\ze\%(${\)" skip="[a-zA-Z0-9._+/-]*\ze${" end="\%(}\)\@<=[a-zA-Z0-9._+/-]*\%([^a-zA-Z0-9._+/-]\|$\)\@=" contains=nixInterpolation oneline
 syn match nixHomePath "\~\%(/[a-zA-Z0-9._+-]\+\)\+"
 syn match nixSearchPath "[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*" contained
 syn match nixPathDelimiter "[<>]" contained
@@ -123,7 +124,7 @@ syn region nixWithExpr matchgroup=nixWithExprKeyword start="\<with\>" matchgroup
 
 syn region nixAssertExpr matchgroup=nixAssertKeyword start="\<assert\>" matchgroup=NONE end=";" contains=@nixExpr
 
-syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixArgOperator,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr,nixInterpolation
+syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixArgOperator,nixSimpleFunctionArgument,nixInterpolatedPath,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr,nixInterpolation
 
 " These definitions override @nixExpr and have to come afterwards:
 
@@ -179,6 +180,7 @@ hi def link nixNamespacedBuiltin         Special
 hi def link nixNull                      Constant
 hi def link nixOperator                  Operator
 hi def link nixPath                      Include
+hi def link nixInterpolatedPath          nixPath
 hi def link nixPathDelimiter             Delimiter
 hi def link nixRecKeyword                Keyword
 hi def link nixSearchPath                Include
