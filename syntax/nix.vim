@@ -50,7 +50,7 @@ syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ en
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
 syn match nixPath "[a-zA-Z0-9._+-]*\%(/[a-zA-Z0-9._+-]\+\)\+"
-syn region nixInterpolatedPath start="\%(\~\|[a-zA-Z0-9._+-]*\)\%(\/[a-zA-Z0-9._+/-]\+\|\/\)\ze\%(${\)" skip="[a-zA-Z0-9._+/-]*\ze${" end="\%(}\)\@<=[a-zA-Z0-9._+/-]*\%([^a-zA-Z0-9._+/-]\|$\)\@=" contains=nixInterpolation
+syn region nixInterpolatedPath start="\%(\~\|[a-zA-Z0-9._+-]*\)\%(\/[a-zA-Z0-9._+/-]\+\|\/\)\ze${" skip="[a-zA-Z0-9._+/-]*\ze${" end="}\@<=[a-zA-Z0-9._+/-]*\%([^a-zA-Z0-9._+/-]\|$\)\@=" contains=nixInterpolation
 syn match nixHomePath "\~\%(/[a-zA-Z0-9._+-]\+\)\+"
 syn match nixSearchPath "[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*" contained
 syn match nixPathDelimiter "[<>]" contained
