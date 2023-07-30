@@ -395,6 +395,18 @@ Execute (syntax):
   AssertEqual SyntaxAt(1, 11), 'nixInterpolationParam'
   AssertEqual SyntaxAt(1, 22), 'nixInterpolatedPath'
 
+Given nix (path-with-multiline-subexpr):
+  foo/${
+    "bar"
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo/'), 'nixInterpolatedPath'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('"'), 'nixStringDelimiter'
+  AssertEqual SyntaxOf('bar'), 'nixSimpleString'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+
 Given nix (let):
   let
     foo = true;
