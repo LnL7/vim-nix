@@ -39,6 +39,9 @@ stdenv.mkDerivation rec {
     endfunction
 
     command! Syntax call Syntax()
+
+    set backspace=2
+    set hlsearch
   '';
 
   checkPhase = ''
