@@ -32,8 +32,13 @@ endfunction
 
 " See command :NixShell
 function! nix#add_pkg_to_env(args)
-  echo "nix-shell " . a:args
+  let l:displaycmd = "nix-shell " . a:args
+  echo l:displaycmd
   let l:env = systemlist("nix-shell --run env " . a:args)
+  if v:shell_error
+    echo "Command failed: " . l:displaycmd
+    return
+  endif
   call nix#set_env(l:env)
   echo "Environment updated"
 endfunction
