@@ -137,22 +137,112 @@ syn keyword nixSimpleBuiltin
       \ scopedImport throw toString
 
 
+" Generated automatically: use `./builtins.sh` from the repo's root to update.
 " Namespaced and non-namespaced Nix builtins as of version 2.0:
 syn keyword nixNamespacedBuiltin contained
-      \ abort add addErrorContext all any attrNames attrValues baseNameOf
-      \ catAttrs compareVersions concatLists concatStringsSep currentSystem
-      \ currentTime deepSeq derivation derivationStrict dirOf div elem elemAt
-      \ fetchGit fetchMercurial fetchTarball fetchurl filter \ filterSource
-      \ findFile foldl' fromJSON functionArgs genList \ genericClosure getAttr
-      \ getEnv hasAttr hasContext hashString head import intersectAttrs isAttrs
-      \ isBool isFloat isFunction isInt isList isNull isString langVersion
-      \ length lessThan listToAttrs map mapAttrs match mul nixPath nixVersion
-      \ parseDrvName partition path pathExists placeholder readDir readFile
-      \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
-      \ storeDir storePath stringLength sub substring tail throw toFile toJSON
-      \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
-      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML bitAnd
-      \ bitOr bitXor floor ceil
+  \ abort
+  \ add
+  \ all
+  \ any
+  \ attrNames
+  \ attrValues
+  \ baseNameOf
+  \ bitAnd
+  \ bitOr
+  \ bitXor
+  \ break
+  \ catAttrs
+  \ ceil
+  \ compareVersions
+  \ concatLists
+  \ concatMap
+  \ concatStringsSep
+  \ deepSeq
+  \ dirOf
+  \ div
+  \ elem
+  \ elemAt
+  \ fetchClosure
+  \ fetchGit
+  \ fetchTarball
+  \ fetchurl
+  \ filter
+  \ filterSource
+  \ findFile
+  \ flakeRefToString
+  \ floor
+  \ foldl'
+  \ fromJSON
+  \ fromTOML
+  \ functionArgs
+  \ genList
+  \ genericClosure
+  \ getAttr
+  \ getContext
+  \ getEnv
+  \ getFlake
+  \ groupBy
+  \ hasAttr
+  \ hasContext
+  \ hashFile
+  \ hashString
+  \ head
+  \ import
+  \ intersectAttrs
+  \ isAttrs
+  \ isBool
+  \ isFloat
+  \ isFunction
+  \ isInt
+  \ isList
+  \ isNull
+  \ isPath
+  \ isString
+  \ length
+  \ lessThan
+  \ listToAttrs
+  \ map
+  \ mapAttrs
+  \ match
+  \ mul
+  \ outputOf
+  \ parseDrvName
+  \ parseFlakeRef
+  \ partition
+  \ path
+  \ pathExists
+  \ placeholder
+  \ readDir
+  \ readFile
+  \ readFileType
+  \ removeAttrs
+  \ replaceStrings
+  \ seq
+  \ sort
+  \ split
+  \ splitVersion
+  \ storePath
+  \ stringLength
+  \ sub
+  \ substring
+  \ tail
+  \ throw
+  \ toFile
+  \ toJSON
+  \ toPath
+  \ toString
+  \ toXML
+  \ trace
+  \ traceVerbose
+  \ tryEval
+  \ typeOf
+  \ zipAttrsWith
+  \ currentSystem
+  \ currentTime
+  \ langVersion
+  \ nixPath
+  \ nixVersion
+  \ storeDir
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
