@@ -7,12 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: DeterminateSystems/nix-installer-action@ab6bcb2d5af0e904d04aea750e2089e9dc4cbfdd
+        with:
+          diagnostic-endpoint: ""
+          source-url: "https://install.lix.systems/lix/lix-installer-x86_64-linux"
       - name: Add nixpkgs to search path
         run: |
           nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
           nix-channel --update
       - name: nix-build
         run: nix-build
+env:
+  FORCE_COLOR: 1
